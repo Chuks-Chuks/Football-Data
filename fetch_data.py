@@ -74,11 +74,11 @@ class FetchData:
     def get_season(self, season: int):
         new_path = f'.dropdownList [data-option-index="{season}"]'
         season = self.driver.find_element(By.CSS_SELECTOR, new_path)
+        season_text = season.text
         self.year.append(season)
-        print(season.text)
         season.click()  # This clicks on the season
         time.sleep(5)
-        return season
+        return season_text
 
     # Fetching the Clubs
     def get_clubs_list(self):
@@ -88,11 +88,11 @@ class FetchData:
             time.sleep(5)
             club_list = self.driver.find_element(By.CSS_SELECTOR, '.dropdownListContainer [data-dropdown-list="clubs"]').text.split()
             print(club_list)
-            print(self.return_clubs(club_list))
+            final_club = self.return_clubs(club_list)
             time.sleep(3)
             clubs.click()
             time.sleep(3)
-            return club_list
+            return final_club
 
     def return_clubs(self, clubs_list: list):
         club_list = clubs_list[2:]

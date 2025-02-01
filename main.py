@@ -16,7 +16,6 @@ for season_number in range(0, len(season_dropdown)):
         list_for_club = json.dumps(fetch.get_clubs_list())
         print(list_for_club)
         season_id = f'{season.replace("/", "")}{randint(1000, 5000)}'
-        # data = (season_id, season , list_for_club)
         dat.write_to_table(dat.insert_into_seasons_table, data=(season_id, season, list_for_club))
         fetch.pinpoint_dropdown()[0].click()
         time.sleep(3)

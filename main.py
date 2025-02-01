@@ -13,12 +13,11 @@ for season_number in range(0, len(season_dropdown)):
     try:
         print(f"\n\nWe are currently in the error free zone. We are trying the {season_number} path\n")
         season = fetch.get_season(season_number)
-        list_for_club = fetch.get_clubs_list()
-        teams_json = json.dumps(list_for_club)
+        list_for_club = json.dumps(fetch.get_clubs_list())
         print(list_for_club)
         season_id = f'{season.replace("/", "")}{randint(1000, 5000)}'
         # data = (season_id, season , list_for_club)
-        dat.write_to_table(dat.insert_into_seasons_table, data=(season_id, season, teams_json))
+        dat.write_to_table(dat.insert_into_seasons_table, data=(season_id, season, list_for_club))
         fetch.pinpoint_dropdown()[0].click()
         time.sleep(3)
     except fetch.exceptions.ElementClickInterceptedException:

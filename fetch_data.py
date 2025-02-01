@@ -6,16 +6,17 @@ import time
 from selenium.webdriver.remote.webelement import WebElement
 
 class FetchData:
-    def __init__(self):
+    def __init__(self, url='https://www.premierleague.com/players'):
         self.root = tk.Tk()
         self.screen_height = self.root.winfo_screenheight()
         self.chrome_options = webdriver.ChromeOptions()
         self.chrome_options.add_experimental_option('detach', True)
         self.driver = webdriver.Chrome(options=self.chrome_options)
         self.year = []
+        self.url = url
         self.reserved_words = ['&', 'United', 'City', 'Town', 'Hotspur', 'Ham', 'Wanderers', 'Palace', 'Wednesday', 'Villa',
                           'Rovers', 'County', 'Forest', 'Athletic', 'Bromwich', 'Albion', 'Hove']
-        self.driver.get('https://www.premierleague.com/players')
+        self.driver.get(self.url)
         self.driver.maximize_window()
         self.accept_button()
         self.close_button()

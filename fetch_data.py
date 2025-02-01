@@ -118,7 +118,7 @@ class FetchData:
                         # and thus if it is not it simply adds it to the new_list
                         new_list.append(j)
                     else:
-                        if club_list[i + 1] == '&' and club_list[i + 2] in self.reserved_words: # This deals specifically with the apersand sign in the name
+                        if club_list[i + 1] == '&' and club_list[i + 2] in self.reserved_words: # This deals specifically with the ampersand sign in the name
                             new_club_name = f'{j} {club_list[i + 1]} {club_list[i + 2]} {club_list[i + 3]}' # It adds the word being checked and then also adds the next two words
                             new_list.append(new_club_name)
                 except IndexError:

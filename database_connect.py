@@ -13,6 +13,16 @@ class WriteToDatabase:
     INSERT INTO seasons_teams (season_id, season, teams) VALUES (%s, %s, %s)
     """
 
+    create_teams_query = """
+    CREATE TABLE IF NOT EXISTS teams (
+        team_id TEXT PRIMARY KEY,
+        team TEXT,
+        stadium TEXT,
+        capacity REAL,
+        year_created REAL,
+        current_manager TEXT
+    )
+    """
     def __init__(self):
         self.connection = psycopg2.connect(
                 user='postgres',

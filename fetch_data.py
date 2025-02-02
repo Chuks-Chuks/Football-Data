@@ -87,42 +87,11 @@ class FetchData:
         if clubs.is_displayed():
             clubs.click()
             time.sleep(5)
-            club_list = self.driver.find_element(By.CSS_SELECTOR, '.dropdownListContainer [data-dropdown-list="clubs"]').text.split()
+            club_list = self.driver.find_element(By.CSS_SELECTOR, '.dropdownListContainer [data-dropdown-list="clubs"]').text.split('\n')[1:]
             print(club_list)
-            final_club = self.return_clubs(club_list)
+            # final_club = self.return_clubs(club_list)
             time.sleep(3)
             clubs.click()
             time.sleep(3)
-            return final_club
-
-    def return_clubs(self, clubs_list: list):
-        club_list = clubs_list[2:]
-        new_list = []
-        for i, j in enumerate(club_list):
-            if j in self.reserved_words and j != '&': # This checks if the word is a reserved word i.e the complete name of a team
-                try:
-                    if club_list[i - 1] in self.reserved_words: # this checks if the word before the reserved word is ALSO in the reserved word list
-                        pass
-                    elif club_list[i + 1] in self.reserved_words: # This checks if the next word is also a reserved word.
-                        new_club_name = f'{club_list[i - 1]} {j} {club_list[i + 1]}' # If it is, then combined the word before it, the word itself and also the word after it
-                        new_list.append(new_club_name)
-                    else: # If it doesn't meet any of the conditions above, trigger this block
-                        new_club_name = f'{club_list[i - 1]} {j}' # Add the word before it and call it a day
-                        new_list.append(new_club_name)
-                except IndexError:
-                    new_club_name = f'{club_list[i - 1]} {j}' # if there is an index error simply maintain the else block
-                    new_list.append(new_club_name)
-
-            else:
-                try:
-                    if club_list[i + 1] not in self.reserved_words: # this checks if the next word is in the reserved list
-                        # and thus if it is not it simply adds it to the new_list
-                        new_list.append(j)
-                    else:
-                        if club_list[i + 1] == '&' and club_list[i + 2] in self.reserved_words: # This deals specifically with the ampersand sign in the name
-                            new_club_name = f'{j} {club_list[i + 1]} {club_list[i + 2]} {club_list[i + 3]}' # It adds the word being checked and then also adds the next two words
-                            new_list.append(new_club_name)
-                except IndexError:
-                    new_list.append(j)
-        return new_list
+            return club_list
 

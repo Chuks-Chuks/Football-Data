@@ -18,11 +18,14 @@ class WriteToDatabase:
         team_id TEXT PRIMARY KEY,
         team TEXT,
         stadium TEXT,
-        capacity REAL,
-        year_created REAL,
+        capacity INTEGER,
+        year_created INTEGER,
         current_manager TEXT
     )
     """
+    insert_into_create_teams = """
+        INSERT INTO seasons_teams (team_id, team, stadium, capacity, year_created, current_manager) VALUES (%s, %s, %s, %s, %s, %s)
+        """
     def __init__(self):
         self.connection = psycopg2.connect(
                 user='postgres',
@@ -37,6 +40,7 @@ class WriteToDatabase:
         # try:
         self.cursor.execute(create_table_sq)
         self.connection.commit()
+        print('table created successfully')
 
     def write_to_table(self, insert_query, data):
         self.cursor.execute(insert_query, data)

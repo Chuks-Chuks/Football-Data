@@ -35,8 +35,11 @@ class FetchData:
         time.sleep(5)
         try:
             close = self.driver.find_element(By.ID, 'advertClose')
-            close.click()
-        except self.exceptions.ElementClickInterceptedException:
+            if close.is_displayed():
+                close.click()
+        except self.exceptions.ElementClickInterceptedException or self.exceptions.ElementNotInteractableException:
+            pass
+        else:
             pass
 
     # Click on the seasons

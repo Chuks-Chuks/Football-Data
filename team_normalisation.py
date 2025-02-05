@@ -1,3 +1,4 @@
+import random
 import time
 
 from selenium.common import NoSuchElementException
@@ -43,13 +44,22 @@ class TeamNormalisation(FetchData):
     def fetch_club_details(self):
         # Fetch club name, year
         try:
-            name = self.driver.find_element(By.CSS_SELECTOR, 'h2.club-header__team-name').text # This retrieves the name of the club
-            est_year = self.driver.find_element(By.CSS_SELECTOR, 'span.club-header__founded-date').text.split()[1] #
-            team_id = name[:3] + est_year
+            time.sleep(2)
+            name = self.driver.find_element(By.CSS_SELECTOR, 'h2.club-header__team-name') # This retrieves the name of the club
+            est_year = self.driver.find_element(By.CSS_SELECTOR, 'span.club-header__founded-date')
+            team_id = None
+            if name.is_displayed() and est_year.is_displayed():
+                name = name.text
+                est_year = est_year.text.split()[1]
+                team_id = name[:3] + est_year
             print(name, team_id, est_year)
-            return team_id, int(est_year)
         except NoSuchElementException:
-            pass
+            # name = None
+            est_year = None
+            team_id = str(random.randint(100, 500))
+        return team_id, est_year
+
+
 
     def fetch_manager(self):
         directory_list = self.driver.find_element(By.CSS_SELECTOR, '.tab [data-link-index="8"]')
@@ -74,20 +84,13 @@ class TeamNormalisation(FetchData):
         stadium = self.driver.find_element(By.CSS_SELECTOR, '.tab [data-link-index="6"]')
         stadium.click()
         time.sleep(3)
-        stadium_information = self.driver.find_element(By.CSS_SELECTOR, '.tablist [data-tab-index="1"]')
-        stadium_information.click()
-        time.sleep(3)
-        capacity = self.driver.find_element(By.CSS_SELECTOR, '.tabbedContent [data-ui-tab="Stadium Information"]').text
-        capacity = int(capacity.split('\n')[0].split(':')[1].strip().replace(',', ''))
+        try:
+            stadium_information = self.driver.find_element(By.CSS_SELECTOR, '.tablist [data-tab-index="1"]')
+            stadium_information.click()
+            time.sleep(3)
+            capacity = self.driver.find_element(By.CSS_SELECTOR, '.tabbedContent [data-ui-tab="Stadium Information"]').text
+            capacity = int(capacity.split('\n')[0].split(':')[1].strip().replace(',', ''))
+        except NoSuchElementException:
+            capacity = None
         return capacity
 
-
-
-
-f = TeamNormalisation()
-print(f.current_season)
-for j in range(len(f.elements)):
-    print(f.automate(j))
-
-# for season_count in range(len(f.season_text().split())):
-#     pass

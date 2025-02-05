@@ -5,7 +5,6 @@ from random import randint
 import json
 from team_normalisation import TeamNormalisation
 
-print('fine')
 def seasons_teams_create():
     fetch = FetchData()
     dat = WriteToDatabase()
@@ -36,10 +35,15 @@ def create_teams():
     dat.create_table(dat.create_teams_query)
     for i in range(len(f.elements)):
         details = f.automate(i)
+        print(details)
         club_name = details[0]
         stadium_name = details[1]
-        team_id = details[2][0]
-        year_created = details[2][1]
+        if details[2][1] is None:
+            team_id = club_name[:3] + details[2][0]
+            year_created = details[2][1]
+        else:
+            team_id = details[2][0]
+            year_created = details[2][1]
         current_manager = details[3]
         capacity = details[4]
         dat.write_to_table(

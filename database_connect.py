@@ -24,7 +24,7 @@ class WriteToDatabase:
     )
     """
     insert_into_create_teams = """
-        INSERT INTO seasons_teams (team_id, team, stadium, capacity, year_created, current_manager) VALUES (%s, %s, %s, %s, %s, %s)
+        INSERT INTO teams (team_id, team, stadium, capacity, year_created, current_manager) VALUES (%s, %s, %s, %s, %s, %s)
         """
     def __init__(self):
         self.connection = psycopg2.connect(

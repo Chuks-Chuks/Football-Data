@@ -15,7 +15,6 @@ class TeamNormalisation(FetchData):
         time.sleep(3)
         self.elements = self.driver.find_elements(By.CSS_SELECTOR, 'td.team a')
         self.stadiums = self.driver.find_elements(By.CSS_SELECTOR, 'td.venue a div.team-index__stadium-name')
-        self.past_season = list
 
     def automate(self, count):
         time.sleep(5)
@@ -35,8 +34,8 @@ class TeamNormalisation(FetchData):
         time.sleep(5)
         capacity = self.fetch_capacity()
         time.sleep(5)
-        time.sleep(5)
         self.driver.close()
+        time.sleep(3)
         # Switch back to the original window
         self.driver.switch_to.window(self.driver.window_handles[0])
         return club_name, stadium_name, club_details, coach_name, capacity

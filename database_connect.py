@@ -23,9 +23,18 @@ class WriteToDatabase:
         current_manager TEXT
     )
     """
+
     insert_into_create_teams = """
         INSERT INTO teams (team_id, team, stadium, capacity, year_created, current_manager) VALUES (%s, %s, %s, %s, %s, %s)
         """
+
+    create_managers_query = """
+    CREATE TABLE IF NOT EXISTS managers (
+        manager_id TEXT PRIMARY KEY,
+        manager_name TEXT,
+        season TEXT REFERENCES season_teams(season) ON UPDATE CASCADE
+    )
+    """
     def __init__(self):
         self.connection = psycopg2.connect(
                 user='postgres',
